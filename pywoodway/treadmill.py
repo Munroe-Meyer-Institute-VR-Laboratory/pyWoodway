@@ -1,4 +1,5 @@
 import serial
+from serial.tools import list_ports
 
 
 class TreadmillCommands:
@@ -29,17 +30,36 @@ class TreadmillReturns:
     GET_FW_REV = 0xD3
 
 
+def find_treadmills():
+    ports = list_ports.comports()
+
+
 class Treadmill:
     def __init__(self, comport):
         self.comport = serial.Serial(comport=comport, baudrate=4800, stopbits=1)
+        self.forward = False
+        self.reverse = False
+        self.sending = False
+
+    def test_treadmill(self):
+        raise NotImplemented
+
+    def get_fw_rev(self):
+        raise NotImplemented
 
     def start_belt(self, timer):
         raise NotImplemented
 
-    def set_speed(self, mph):
+    def set_speed(self, mph, direction):
+        raise NotImplemented
+
+    def get_speed(self):
         raise NotImplemented
 
     def set_elevation(self, elevation):
+        raise NotImplemented
+
+    def get_elevation(self):
         raise NotImplemented
 
     def stop_belt(self):

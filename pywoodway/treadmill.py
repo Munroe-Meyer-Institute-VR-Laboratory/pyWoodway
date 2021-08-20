@@ -56,6 +56,8 @@ def find_treadmills(a_sn=None, b_sn=None):
 class Treadmill:
     def __init__(self, comport):
         self.comport = serial.Serial(comport, baudrate=4800, stopbits=1)
+        if self.test_treadmill():
+            self.stop_belt()
         self.forward = False
         self.reverse = False
         self.sending = False
@@ -113,9 +115,13 @@ class Treadmill:
                 if isinstance(mph, float):
                     command = bytearray()
                     command.append(TreadmillCommands.SET_SPEED)
-                    if mph < 0.0:
+                    if mph > 0.0:
+                        self.forward = True
+                        self.reverse = False
                         command.append(ord('0'))
                     else:
+                        self.forward = False
+                        self.reverse = True
                         command.append(ord('3'))
                     if mph < 10.0:
                         command.append(ord('0'))
@@ -194,9 +200,9 @@ class SplitBelt:
                 return False
         return success
 
-    def set_speed(self, a_mph, a_dir, b_mph, b_dir):
-        if self.belt_a.set_speed(a_mph, a_dir):
-            if self.belt_b.set_speed(b_mph, b_dir):
+    def set_speed(self, a_mph, b_mph):
+        if self.belt_a.set_speed(a_mph):
+            if self.belt_b.set_speed(b_mph):
                 return True
         return False
 

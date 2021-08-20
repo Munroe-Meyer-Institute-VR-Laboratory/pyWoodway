@@ -30,8 +30,19 @@ class TreadmillReturns:
     GET_FW_REV = 0xD3
 
 
-def find_treadmills():
+# 'FTHCUWVAA' - comport A
+# 'FTHCUQ9IA' - comport B
+def find_treadmills(a_sn, b_sn):
     ports = list_ports.comports()
+    a_port, b_port = None, None
+    for port in ports:
+        if port.serial_number == a_sn:
+            a_port = port
+            continue
+        if port.serial_number == b_sn:
+            b_port = port
+            continue
+    return [a_port, b_port]
 
 
 class Treadmill:

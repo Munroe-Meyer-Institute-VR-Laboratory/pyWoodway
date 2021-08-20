@@ -17,18 +17,18 @@ class TreadmillCommands:
 
 class TreadmillReturns:
     START_BELT_TIMER = b'\xb0'
-    DISENGAGE_BELT = 0xB2
+    DISENGAGE_BELT = b'\xb2'
     SET_SPEED = b'\xb3'
-    SET_ELEVATION = 0xB4
+    SET_ELEVATION = b'\xb4'
     START_BELT = b'\xb9'
     AUTO_STOP = b'\xba'
-    MASTER_TIMEOUT = 0xBD
-    INVALID_DATA = 0xBE
-    INVALID_COMMAND = 0xBF
+    MASTER_TIMEOUT = b'\xbd'
+    INVALID_DATA = b'\xbe'
+    INVALID_COMMAND = b'\xbf'
     TEST_COMMS = b'\xd0'
     GET_SPEED = b'\xd1'
-    GET_ELEVATION = 0xD2
-    GET_FW_REV = 0xD3
+    GET_ELEVATION = b'\xd2'
+    GET_FW_REV = b'\xd3'
 
 
 # 'FTHCUWVAA' - comport A
@@ -58,6 +58,7 @@ class Treadmill:
         self.comport = serial.Serial(comport, baudrate=4800, stopbits=1)
         if self.test_treadmill():
             self.stop_belt()
+        self.running = False
         self.forward = False
         self.reverse = False
         self.sending = False
@@ -83,7 +84,19 @@ class Treadmill:
                     return False
 
     def get_fw_rev(self):
-        raise NotImplemented
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.GET_FW_REV)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.GET_FW_REV:
+                    fw_bytes = self.comport.read(4)
+                    fw_rev = (fw_bytes[0] << 24) | (fw_bytes[1] << 16) | (fw_bytes[2] << 8) | fw_bytes[3]
+                    return fw_rev
+                else:
+                    print("Something went wrong, code:", return_code)
+                    return False
 
     def start_belt(self, timer):
         if self.comport is not None:
@@ -94,6 +107,7 @@ class Treadmill:
                     self.comport.write(command)
                     return_code = self.comport.read(1)
                     if return_code == TreadmillReturns.START_BELT_TIMER:
+                        self.running = True
                         return True
                     else:
                         print("Something went wrong, code:", return_code)
@@ -104,6 +118,7 @@ class Treadmill:
                     self.comport.write(command)
                     return_code = self.comport.read(1)
                     if return_code == TreadmillReturns.START_BELT:
+                        self.running = True
                         return True
                     else:
                         print("Something went wrong, code:", return_code)
@@ -159,10 +174,44 @@ class Treadmill:
                     return False
 
     def set_elevation(self, elevation):
-        raise NotImplemented
+        if self.comport is not None:
+            if self.comport.isOpen():
+                if isinstance(elevation, float):
+                    command = bytearray()
+                    command.append(TreadmillCommands.SET_ELEVATION)
+                    if elevation < 100.0:
+                        command.append(ord('0'))
+                    if elevation < 10.0:
+                        command.append(ord('0'))
+                    elevation_digits = [ord(i) for i in str(elevation)]
+                    for digit in elevation_digits:
+                        if digit != 46:
+                            command.append(digit)
+                    self.comport.write(command)
+                    return_code = self.comport.read(1)
+                    if return_code == TreadmillReturns.SET_ELEVATION:
+                        return True
+                    else:
+                        print("Something went wrong, code:", return_code)
+                        return False
 
     def get_elevation(self):
-        raise NotImplemented
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.GET_ELEVATION)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.GET_SPEED:
+                    elevation_bytes = self.comport.read(4)
+                    elevation = float((elevation_bytes[0] - 48) * 100.0) + \
+                                float((elevation_bytes[1] - 48) * 10.0) + \
+                                float((elevation_bytes[2] - 48)) + \
+                                float((elevation_bytes[3] - 48) / 10.0)
+                    return elevation
+                else:
+                    print("Something went wrong, code:", return_code)
+                    return False
 
     def stop_belt(self):
         if self.comport is not None:
@@ -172,13 +221,25 @@ class Treadmill:
                 self.comport.write(command)
                 return_code = self.comport.read(1)
                 if return_code == TreadmillReturns.AUTO_STOP:
+                    self.running = False
                     return True
                 else:
                     print("Something went wrong, code:", return_code)
                     return False
 
     def disengage_belt(self):
-        raise NotImplemented
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.DISENGAGE_BELT)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.DISENGAGE_BELT:
+                    self.running = False
+                    return True
+                else:
+                    print("Something went wrong, code:", return_code)
+                    return False
 
 
 class SplitBelt:
@@ -206,8 +267,8 @@ class SplitBelt:
                 return True
         return False
 
-    def stop_belts(self, a_stop, b_stop):
-        if a_stop:
+    def stop_belts(self):
+        if self.belt_a.running:
             self.belt_a.stop_belt()
-        if b_stop:
+        if self.belt_b.running:
             self.belt_b.stop_belt()

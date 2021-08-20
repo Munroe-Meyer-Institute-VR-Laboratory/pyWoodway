@@ -107,13 +107,13 @@ class Treadmill:
                         print("Something went wrong, code:", return_code)
                         return False
 
-    def set_speed(self, mph, direction):
+    def set_speed(self, mph):
         if self.comport is not None:
             if self.comport.isOpen():
                 if isinstance(mph, float):
                     command = bytearray()
                     command.append(TreadmillCommands.SET_SPEED)
-                    if direction:
+                    if mph < 0.0:
                         command.append(ord('0'))
                     else:
                         command.append(ord('3'))

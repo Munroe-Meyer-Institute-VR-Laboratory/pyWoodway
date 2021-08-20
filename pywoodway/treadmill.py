@@ -151,3 +151,29 @@ class SplitBelt:
     def __init__(self, comport_a, comport_b):
         self.belt_a = Treadmill(comport_a)
         self.belt_b = Treadmill(comport_b)
+
+    def start_belts(self, start_a, a_timer, start_b, b_timer):
+        success = False
+        if start_a:
+            if self.belt_a.start_belt(a_timer):
+                success = True
+            else:
+                return False
+        if start_b:
+            if self.belt_b.start_belt(b_timer):
+                success = True
+            else:
+                return False
+        return success
+
+    def set_speed(self, a_mph, a_dir, b_mph, b_dir):
+        if self.belt_a.set_speed(a_mph, a_dir):
+            if self.belt_b.set_speed(b_mph, b_dir):
+                return True
+        return False
+
+    def stop_belts(self, a_stop, b_stop):
+        if a_stop:
+            self.belt_a.stop_belt()
+        if b_stop:
+            self.belt_b.stop_belt()

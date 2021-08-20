@@ -26,23 +26,25 @@ class TreadmillReturns:
     INVALID_DATA = 0xBE
     INVALID_COMMAND = 0xBF
     TEST_COMMS = b'\xd0'
-    GET_SPEED = 0xD1
+    GET_SPEED = b'\xd1'
     GET_ELEVATION = 0xD2
     GET_FW_REV = 0xD3
 
 
 # 'FTHCUWVAA' - comport A
 # 'FTHCUQ9IA' - comport B
-def find_treadmills(a_sn, b_sn):
+def find_treadmills(a_sn=None, b_sn=None):
     ports = list_ports.comports()
     a_port, b_port = None, None
     for port in ports:
-        if port.serial_number == a_sn:
-            a_port = port
-            continue
-        if port.serial_number == b_sn:
-            b_port = port
-            continue
+        if a_sn is not None:
+            if port.serial_number == a_sn:
+                a_port = port
+                continue
+        if b_sn is not None:
+            if port.serial_number == b_sn:
+                b_port = port
+                continue
     return [a_port, b_port]
 
 
@@ -122,7 +124,23 @@ class Treadmill:
                     raise ValueError("Parameter invalid - mph must be a float!")
 
     def get_speed(self):
-        raise NotImplemented
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.GET_SPEED)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.GET_SPEED:
+                    speed_bytes = self.comport.read(4)
+                    speed = float((speed_bytes[1] - 48) * 10.0) + \
+                            float((speed_bytes[2] - 48)) + \
+                            float((speed_bytes[3] - 48) / 10.0)
+                    if speed_bytes[0] == 51:
+                        speed = -speed
+                    return speed
+                else:
+                    print("Something went wrong, code:", return_code)
+                    return False
 
     def set_elevation(self, elevation):
         raise NotImplemented

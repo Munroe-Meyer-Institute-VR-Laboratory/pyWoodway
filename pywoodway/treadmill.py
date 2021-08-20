@@ -3,28 +3,29 @@ from serial.tools import list_ports
 
 
 class TreadmillCommands:
-    START_BELT_TIMER = 0xA0
-    DISENGAGE_BELT = 0xA2
-    SET_SPEED = 0xA3
-    SET_ELEVATION = 0xA4
-    START_BELT = 0xA9
-    AUTO_STOP = 0xAA
-    TEST_COMMS = 0xC0
-    GET_SPEED = 0xC1
-    GET_ELEVATION = 0xC2
-    GET_FW_REV = 0xC3
+    START_BELT_TIMER = 160
+    DISENGAGE_BELT = 162
+    SET_SPEED = 163
+    SET_ELEVATION = 164
+    START_BELT = 169
+    AUTO_STOP = 170
+    TEST_COMMS = 192
+    GET_SPEED = 193
+    GET_ELEVATION = 194
+    GET_FW_REV = 195
 
 
 class TreadmillReturns:
-    START_BELT = 0xB0
+    START_BELT_TIMER = b'\xb0'
     DISENGAGE_BELT = 0xB2
     SET_SPEED = 0xB3
     SET_ELEVATION = 0xB4
+    START_BELT = b'\xb9'
     AUTO_STOP = 0xBA
     MASTER_TIMEOUT = 0xBD
     INVALID_DATA = 0xBE
     INVALID_COMMAND = 0xBF
-    TEST_COMMS = 0xD0
+    TEST_COMMS = b'\xd0'
     GET_SPEED = 0xD1
     GET_ELEVATION = 0xD2
     GET_FW_REV = 0xD3
@@ -47,19 +48,52 @@ def find_treadmills(a_sn, b_sn):
 
 class Treadmill:
     def __init__(self, comport):
-        self.comport = serial.Serial(comport=comport, baudrate=4800, stopbits=1)
+        self.comport = serial.Serial(comport, baudrate=4800, stopbits=1)
         self.forward = False
         self.reverse = False
         self.sending = False
 
     def test_treadmill(self):
-        raise NotImplemented
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.TEST_COMMS)
+                print(command)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.TEST_COMMS:
+                    print("State:", self.comport.read(1))
+                    return True
+                else:
+                    print("Something went wrong, code:", return_code)
+                    return False
 
     def get_fw_rev(self):
         raise NotImplemented
 
     def start_belt(self, timer):
-        raise NotImplemented
+        if self.comport is not None:
+            if self.comport.isOpen():
+                if timer:
+                    command = bytearray()
+                    command.append(TreadmillCommands.START_BELT_TIMER)
+                    self.comport.write(command)
+                    return_code = self.comport.read(1)
+                    if return_code == TreadmillReturns.START_BELT_TIMER:
+                        return True
+                    else:
+                        print("Something went wrong, code:", return_code)
+                        return False
+                else:
+                    command = bytearray()
+                    command.append(TreadmillCommands.START_BELT)
+                    self.comport.write(command)
+                    return_code = self.comport.read(1)
+                    if return_code == TreadmillReturns.START_BELT:
+                        return True
+                    else:
+                        print("Something went wrong, code:", return_code)
+                        return False
 
     def set_speed(self, mph, direction):
         raise NotImplemented

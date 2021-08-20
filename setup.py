@@ -12,4 +12,5 @@ setup(name='pyWoodway',
 
 # python setup.py bdist_wheel
 # pip3 install pdoc3
-# pdoc --html --output-dir docs pyempatica
+# pdoc --html --output-dir docs pywoodway
+# https://ftdichip.com/drivers/

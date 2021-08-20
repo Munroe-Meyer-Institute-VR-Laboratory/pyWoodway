@@ -18,10 +18,10 @@ class TreadmillCommands:
 class TreadmillReturns:
     START_BELT_TIMER = b'\xb0'
     DISENGAGE_BELT = 0xB2
-    SET_SPEED = 0xB3
+    SET_SPEED = b'\xb3'
     SET_ELEVATION = 0xB4
     START_BELT = b'\xb9'
-    AUTO_STOP = 0xBA
+    AUTO_STOP = b'\xba'
     MASTER_TIMEOUT = 0xBD
     INVALID_DATA = 0xBE
     INVALID_COMMAND = 0xBF
@@ -96,7 +96,30 @@ class Treadmill:
                         return False
 
     def set_speed(self, mph, direction):
-        raise NotImplemented
+        if self.comport is not None:
+            if self.comport.isOpen():
+                if isinstance(mph, float):
+                    command = bytearray()
+                    command.append(TreadmillCommands.SET_SPEED)
+                    if direction:
+                        command.append(ord('0'))
+                    else:
+                        command.append(ord('3'))
+                    if mph < 10.0:
+                        command.append(ord('0'))
+                    mph_digits = [ord(i) for i in str(mph)]
+                    for digit in mph_digits:
+                        if digit != 46:
+                            command.append(digit)
+                    self.comport.write(command)
+                    return_code = self.comport.read(1)
+                    if return_code == TreadmillReturns.SET_SPEED:
+                        return True
+                    else:
+                        print("Something went wrong, code:", return_code)
+                        return False
+                else:
+                    raise ValueError("Parameter invalid - mph must be a float!")
 
     def get_speed(self):
         raise NotImplemented
@@ -108,7 +131,17 @@ class Treadmill:
         raise NotImplemented
 
     def stop_belt(self):
-        raise NotImplemented
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.AUTO_STOP)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.AUTO_STOP:
+                    return True
+                else:
+                    print("Something went wrong, code:", return_code)
+                    return False
 
     def disengage_belt(self):
         raise NotImplemented

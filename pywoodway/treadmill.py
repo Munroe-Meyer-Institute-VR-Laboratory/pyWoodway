@@ -36,6 +36,7 @@ class TreadmillReturns:
 def find_treadmills(a_sn=None, b_sn=None):
     ports = list_ports.comports()
     a_port, b_port = None, None
+    found_ports = []
     for port in ports:
         if a_sn is not None:
             if port.serial_number == a_sn:
@@ -45,7 +46,11 @@ def find_treadmills(a_sn=None, b_sn=None):
             if port.serial_number == b_sn:
                 b_port = port
                 continue
-    return [a_port, b_port]
+    if a_port is not None:
+        found_ports.append(a_port)
+    if b_port is not None:
+        found_ports.append(b_port)
+    return found_ports
 
 
 class Treadmill:
@@ -54,6 +59,11 @@ class Treadmill:
         self.forward = False
         self.reverse = False
         self.sending = False
+
+    def close(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                self.comport.close()
 
     def test_treadmill(self):
         if self.comport is not None:

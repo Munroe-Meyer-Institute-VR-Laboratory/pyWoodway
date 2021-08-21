@@ -268,7 +268,18 @@ class SplitBelt:
         return False
 
     def stop_belts(self):
-        if self.belt_a.running:
-            self.belt_a.stop_belt()
-        if self.belt_b.running:
-            self.belt_b.stop_belt()
+        self.belt_a.stop_belt()
+        self.belt_b.stop_belt()
+
+    def get_speeds(self):
+        return [self.belt_a.get_speed(), self.belt_b.get_speed()]
+
+    def get_elevations(self):
+        return [self.belt_a.get_elevation(), self.belt_b.get_elevation()]
+
+    def get_fw_revs(self):
+        return [self.belt_a.get_fw_rev(), self.belt_b.get_fw_rev()]
+
+    def close(self):
+        self.belt_a.close()
+        self.belt_b.close()

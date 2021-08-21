@@ -5,7 +5,6 @@ import time
 port_sn = 'FTHCUWVAA'
 port = find_treadmills(a_sn=port_sn)
 
-
 if port is not None:
     print("Treadmill found on port", port[0].name)
     tm = Treadmill(port[0].name)

@@ -1,0 +1,1235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>pywoodway.treadmill API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>pywoodway.treadmill</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import serial
+from serial.tools import list_ports
+
+
+class TreadmillCommands:
+    START_BELT_TIMER = 160
+    DISENGAGE_BELT = 162
+    SET_SPEED = 163
+    SET_ELEVATION = 164
+    START_BELT = 169
+    AUTO_STOP = 170
+    TEST_COMMS = 192
+    GET_SPEED = 193
+    GET_ELEVATION = 194
+    GET_FW_REV = 195
+
+
+class TreadmillReturns:
+    START_BELT_TIMER = b&#39;\xb0&#39;
+    DISENGAGE_BELT = b&#39;\xb2&#39;
+    SET_SPEED = b&#39;\xb3&#39;
+    SET_ELEVATION = b&#39;\xb4&#39;
+    START_BELT = b&#39;\xb9&#39;
+    AUTO_STOP = b&#39;\xba&#39;
+    MASTER_TIMEOUT = b&#39;\xbd&#39;
+    INVALID_DATA = b&#39;\xbe&#39;
+    INVALID_COMMAND = b&#39;\xbf&#39;
+    TEST_COMMS = b&#39;\xd0&#39;
+    GET_SPEED = b&#39;\xd1&#39;
+    GET_ELEVATION = b&#39;\xd2&#39;
+    GET_FW_REV = b&#39;\xd3&#39;
+
+
+# &#39;FTHCUWVAA&#39; - comport A
+# &#39;FTHCUQ9IA&#39; - comport B
+def find_treadmills(a_sn=None, b_sn=None):
+    ports = list_ports.comports()
+    a_port, b_port = None, None
+    found_ports = []
+    for port in ports:
+        if a_sn is not None:
+            if port.serial_number == a_sn:
+                a_port = port
+                continue
+        if b_sn is not None:
+            if port.serial_number == b_sn:
+                b_port = port
+                continue
+    if a_port is not None:
+        found_ports.append(a_port)
+    if b_port is not None:
+        found_ports.append(b_port)
+    return found_ports
+
+
+class Treadmill:
+    def __init__(self, comport):
+        self.comport = serial.Serial(comport, baudrate=4800, stopbits=1)
+        if self.test_treadmill():
+            self.stop_belt()
+        self.running = False
+        self.forward = False
+        self.reverse = False
+        self.sending = False
+
+    def close(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                self.comport.close()
+
+    def test_treadmill(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.TEST_COMMS)
+                print(command)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.TEST_COMMS:
+                    print(&#34;State:&#34;, self.comport.read(1))
+                    return True
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+
+    def get_fw_rev(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.GET_FW_REV)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.GET_FW_REV:
+                    fw_bytes = self.comport.read(4)
+                    fw_rev = (fw_bytes[0] &lt;&lt; 24) | (fw_bytes[1] &lt;&lt; 16) | (fw_bytes[2] &lt;&lt; 8) | fw_bytes[3]
+                    return fw_rev
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+
+    def start_belt(self, timer):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                if timer:
+                    command = bytearray()
+                    command.append(TreadmillCommands.START_BELT_TIMER)
+                    self.comport.write(command)
+                    return_code = self.comport.read(1)
+                    if return_code == TreadmillReturns.START_BELT_TIMER:
+                        self.running = True
+                        return True
+                    else:
+                        print(&#34;Something went wrong, code:&#34;, return_code)
+                        return False
+                else:
+                    command = bytearray()
+                    command.append(TreadmillCommands.START_BELT)
+                    self.comport.write(command)
+                    return_code = self.comport.read(1)
+                    if return_code == TreadmillReturns.START_BELT:
+                        self.running = True
+                        return True
+                    else:
+                        print(&#34;Something went wrong, code:&#34;, return_code)
+                        return False
+
+    def set_speed(self, mph):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                if isinstance(mph, float):
+                    command = bytearray()
+                    command.append(TreadmillCommands.SET_SPEED)
+                    if mph &gt; 0.0:
+                        self.forward = True
+                        self.reverse = False
+                        command.append(ord(&#39;0&#39;))
+                    else:
+                        self.forward = False
+                        self.reverse = True
+                        command.append(ord(&#39;3&#39;))
+                    if mph &lt; 10.0:
+                        command.append(ord(&#39;0&#39;))
+                    mph_digits = [ord(i) for i in str(mph)]
+                    for digit in mph_digits:
+                        if digit != 46:
+                            command.append(digit)
+                    self.comport.write(command)
+                    return_code = self.comport.read(1)
+                    if return_code == TreadmillReturns.SET_SPEED:
+                        return True
+                    else:
+                        print(&#34;Something went wrong, code:&#34;, return_code)
+                        return False
+                else:
+                    raise ValueError(&#34;Parameter invalid - mph must be a float!&#34;)
+
+    def get_speed(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.GET_SPEED)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.GET_SPEED:
+                    speed_bytes = self.comport.read(4)
+                    speed = float((speed_bytes[1] - 48) * 10.0) + \
+                            float((speed_bytes[2] - 48)) + \
+                            float((speed_bytes[3] - 48) / 10.0)
+                    if speed_bytes[0] == 51:
+                        speed = -speed
+                    return speed
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+
+    def set_elevation(self, elevation):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                if isinstance(elevation, float):
+                    command = bytearray()
+                    command.append(TreadmillCommands.SET_ELEVATION)
+                    if elevation &lt; 100.0:
+                        command.append(ord(&#39;0&#39;))
+                    if elevation &lt; 10.0:
+                        command.append(ord(&#39;0&#39;))
+                    elevation_digits = [ord(i) for i in str(elevation)]
+                    for digit in elevation_digits:
+                        if digit != 46:
+                            command.append(digit)
+                    self.comport.write(command)
+                    return_code = self.comport.read(1)
+                    if return_code == TreadmillReturns.SET_ELEVATION:
+                        return True
+                    else:
+                        print(&#34;Something went wrong, code:&#34;, return_code)
+                        return False
+
+    def get_elevation(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.GET_ELEVATION)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.GET_SPEED:
+                    elevation_bytes = self.comport.read(4)
+                    elevation = float((elevation_bytes[0] - 48) * 100.0) + \
+                                float((elevation_bytes[1] - 48) * 10.0) + \
+                                float((elevation_bytes[2] - 48)) + \
+                                float((elevation_bytes[3] - 48) / 10.0)
+                    return elevation
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+
+    def stop_belt(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.AUTO_STOP)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.AUTO_STOP:
+                    self.running = False
+                    return True
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+
+    def disengage_belt(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.DISENGAGE_BELT)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.DISENGAGE_BELT:
+                    self.running = False
+                    return True
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+
+
+class SplitBelt:
+    def __init__(self, comport_a, comport_b):
+        self.belt_a = Treadmill(comport_a)
+        self.belt_b = Treadmill(comport_b)
+
+    def start_belts(self, start_a, a_timer, start_b, b_timer):
+        success = False
+        if start_a:
+            if self.belt_a.start_belt(a_timer):
+                success = True
+            else:
+                return False
+        if start_b:
+            if self.belt_b.start_belt(b_timer):
+                success = True
+            else:
+                return False
+        return success
+
+    def set_speed(self, a_mph, b_mph):
+        if self.belt_a.set_speed(a_mph):
+            if self.belt_b.set_speed(b_mph):
+                return True
+        return False
+
+    def stop_belts(self):
+        self.belt_a.stop_belt()
+        self.belt_b.stop_belt()
+
+    def get_speeds(self):
+        return [self.belt_a.get_speed(), self.belt_b.get_speed()]
+
+    def get_elevations(self):
+        return [self.belt_a.get_elevation(), self.belt_b.get_elevation()]
+
+    def get_fw_revs(self):
+        return [self.belt_a.get_fw_rev(), self.belt_b.get_fw_rev()]
+
+    def close(self):
+        self.belt_a.close()
+        self.belt_b.close()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="pywoodway.treadmill.find_treadmills"><code class="name flex">
+<span>def <span class="ident">find_treadmills</span></span>(<span>a_sn=None, b_sn=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def find_treadmills(a_sn=None, b_sn=None):
+    ports = list_ports.comports()
+    a_port, b_port = None, None
+    found_ports = []
+    for port in ports:
+        if a_sn is not None:
+            if port.serial_number == a_sn:
+                a_port = port
+                continue
+        if b_sn is not None:
+            if port.serial_number == b_sn:
+                b_port = port
+                continue
+    if a_port is not None:
+        found_ports.append(a_port)
+    if b_port is not None:
+        found_ports.append(b_port)
+    return found_ports</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="pywoodway.treadmill.SplitBelt"><code class="flex name class">
+<span>class <span class="ident">SplitBelt</span></span>
+<span>(</span><span>comport_a, comport_b)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SplitBelt:
+    def __init__(self, comport_a, comport_b):
+        self.belt_a = Treadmill(comport_a)
+        self.belt_b = Treadmill(comport_b)
+
+    def start_belts(self, start_a, a_timer, start_b, b_timer):
+        success = False
+        if start_a:
+            if self.belt_a.start_belt(a_timer):
+                success = True
+            else:
+                return False
+        if start_b:
+            if self.belt_b.start_belt(b_timer):
+                success = True
+            else:
+                return False
+        return success
+
+    def set_speed(self, a_mph, b_mph):
+        if self.belt_a.set_speed(a_mph):
+            if self.belt_b.set_speed(b_mph):
+                return True
+        return False
+
+    def stop_belts(self):
+        self.belt_a.stop_belt()
+        self.belt_b.stop_belt()
+
+    def get_speeds(self):
+        return [self.belt_a.get_speed(), self.belt_b.get_speed()]
+
+    def get_elevations(self):
+        return [self.belt_a.get_elevation(), self.belt_b.get_elevation()]
+
+    def get_fw_revs(self):
+        return [self.belt_a.get_fw_rev(), self.belt_b.get_fw_rev()]
+
+    def close(self):
+        self.belt_a.close()
+        self.belt_b.close()</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="pywoodway.treadmill.SplitBelt.close"><code class="name flex">
+<span>def <span class="ident">close</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def close(self):
+    self.belt_a.close()
+    self.belt_b.close()</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.SplitBelt.get_elevations"><code class="name flex">
+<span>def <span class="ident">get_elevations</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_elevations(self):
+    return [self.belt_a.get_elevation(), self.belt_b.get_elevation()]</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.SplitBelt.get_fw_revs"><code class="name flex">
+<span>def <span class="ident">get_fw_revs</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_fw_revs(self):
+    return [self.belt_a.get_fw_rev(), self.belt_b.get_fw_rev()]</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.SplitBelt.get_speeds"><code class="name flex">
+<span>def <span class="ident">get_speeds</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_speeds(self):
+    return [self.belt_a.get_speed(), self.belt_b.get_speed()]</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.SplitBelt.set_speed"><code class="name flex">
+<span>def <span class="ident">set_speed</span></span>(<span>self, a_mph, b_mph)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_speed(self, a_mph, b_mph):
+    if self.belt_a.set_speed(a_mph):
+        if self.belt_b.set_speed(b_mph):
+            return True
+    return False</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.SplitBelt.start_belts"><code class="name flex">
+<span>def <span class="ident">start_belts</span></span>(<span>self, start_a, a_timer, start_b, b_timer)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start_belts(self, start_a, a_timer, start_b, b_timer):
+    success = False
+    if start_a:
+        if self.belt_a.start_belt(a_timer):
+            success = True
+        else:
+            return False
+    if start_b:
+        if self.belt_b.start_belt(b_timer):
+            success = True
+        else:
+            return False
+    return success</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.SplitBelt.stop_belts"><code class="name flex">
+<span>def <span class="ident">stop_belts</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def stop_belts(self):
+    self.belt_a.stop_belt()
+    self.belt_b.stop_belt()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="pywoodway.treadmill.Treadmill"><code class="flex name class">
+<span>class <span class="ident">Treadmill</span></span>
+<span>(</span><span>comport)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Treadmill:
+    def __init__(self, comport):
+        self.comport = serial.Serial(comport, baudrate=4800, stopbits=1)
+        if self.test_treadmill():
+            self.stop_belt()
+        self.running = False
+        self.forward = False
+        self.reverse = False
+        self.sending = False
+
+    def close(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                self.comport.close()
+
+    def test_treadmill(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.TEST_COMMS)
+                print(command)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.TEST_COMMS:
+                    print(&#34;State:&#34;, self.comport.read(1))
+                    return True
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+
+    def get_fw_rev(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.GET_FW_REV)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.GET_FW_REV:
+                    fw_bytes = self.comport.read(4)
+                    fw_rev = (fw_bytes[0] &lt;&lt; 24) | (fw_bytes[1] &lt;&lt; 16) | (fw_bytes[2] &lt;&lt; 8) | fw_bytes[3]
+                    return fw_rev
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+
+    def start_belt(self, timer):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                if timer:
+                    command = bytearray()
+                    command.append(TreadmillCommands.START_BELT_TIMER)
+                    self.comport.write(command)
+                    return_code = self.comport.read(1)
+                    if return_code == TreadmillReturns.START_BELT_TIMER:
+                        self.running = True
+                        return True
+                    else:
+                        print(&#34;Something went wrong, code:&#34;, return_code)
+                        return False
+                else:
+                    command = bytearray()
+                    command.append(TreadmillCommands.START_BELT)
+                    self.comport.write(command)
+                    return_code = self.comport.read(1)
+                    if return_code == TreadmillReturns.START_BELT:
+                        self.running = True
+                        return True
+                    else:
+                        print(&#34;Something went wrong, code:&#34;, return_code)
+                        return False
+
+    def set_speed(self, mph):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                if isinstance(mph, float):
+                    command = bytearray()
+                    command.append(TreadmillCommands.SET_SPEED)
+                    if mph &gt; 0.0:
+                        self.forward = True
+                        self.reverse = False
+                        command.append(ord(&#39;0&#39;))
+                    else:
+                        self.forward = False
+                        self.reverse = True
+                        command.append(ord(&#39;3&#39;))
+                    if mph &lt; 10.0:
+                        command.append(ord(&#39;0&#39;))
+                    mph_digits = [ord(i) for i in str(mph)]
+                    for digit in mph_digits:
+                        if digit != 46:
+                            command.append(digit)
+                    self.comport.write(command)
+                    return_code = self.comport.read(1)
+                    if return_code == TreadmillReturns.SET_SPEED:
+                        return True
+                    else:
+                        print(&#34;Something went wrong, code:&#34;, return_code)
+                        return False
+                else:
+                    raise ValueError(&#34;Parameter invalid - mph must be a float!&#34;)
+
+    def get_speed(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.GET_SPEED)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.GET_SPEED:
+                    speed_bytes = self.comport.read(4)
+                    speed = float((speed_bytes[1] - 48) * 10.0) + \
+                            float((speed_bytes[2] - 48)) + \
+                            float((speed_bytes[3] - 48) / 10.0)
+                    if speed_bytes[0] == 51:
+                        speed = -speed
+                    return speed
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+
+    def set_elevation(self, elevation):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                if isinstance(elevation, float):
+                    command = bytearray()
+                    command.append(TreadmillCommands.SET_ELEVATION)
+                    if elevation &lt; 100.0:
+                        command.append(ord(&#39;0&#39;))
+                    if elevation &lt; 10.0:
+                        command.append(ord(&#39;0&#39;))
+                    elevation_digits = [ord(i) for i in str(elevation)]
+                    for digit in elevation_digits:
+                        if digit != 46:
+                            command.append(digit)
+                    self.comport.write(command)
+                    return_code = self.comport.read(1)
+                    if return_code == TreadmillReturns.SET_ELEVATION:
+                        return True
+                    else:
+                        print(&#34;Something went wrong, code:&#34;, return_code)
+                        return False
+
+    def get_elevation(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.GET_ELEVATION)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.GET_SPEED:
+                    elevation_bytes = self.comport.read(4)
+                    elevation = float((elevation_bytes[0] - 48) * 100.0) + \
+                                float((elevation_bytes[1] - 48) * 10.0) + \
+                                float((elevation_bytes[2] - 48)) + \
+                                float((elevation_bytes[3] - 48) / 10.0)
+                    return elevation
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+
+    def stop_belt(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.AUTO_STOP)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.AUTO_STOP:
+                    self.running = False
+                    return True
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+
+    def disengage_belt(self):
+        if self.comport is not None:
+            if self.comport.isOpen():
+                command = bytearray()
+                command.append(TreadmillCommands.DISENGAGE_BELT)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.DISENGAGE_BELT:
+                    self.running = False
+                    return True
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="pywoodway.treadmill.Treadmill.close"><code class="name flex">
+<span>def <span class="ident">close</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def close(self):
+    if self.comport is not None:
+        if self.comport.isOpen():
+            self.comport.close()</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.Treadmill.disengage_belt"><code class="name flex">
+<span>def <span class="ident">disengage_belt</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def disengage_belt(self):
+    if self.comport is not None:
+        if self.comport.isOpen():
+            command = bytearray()
+            command.append(TreadmillCommands.DISENGAGE_BELT)
+            self.comport.write(command)
+            return_code = self.comport.read(1)
+            if return_code == TreadmillReturns.DISENGAGE_BELT:
+                self.running = False
+                return True
+            else:
+                print(&#34;Something went wrong, code:&#34;, return_code)
+                return False</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.Treadmill.get_elevation"><code class="name flex">
+<span>def <span class="ident">get_elevation</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_elevation(self):
+    if self.comport is not None:
+        if self.comport.isOpen():
+            command = bytearray()
+            command.append(TreadmillCommands.GET_ELEVATION)
+            self.comport.write(command)
+            return_code = self.comport.read(1)
+            if return_code == TreadmillReturns.GET_SPEED:
+                elevation_bytes = self.comport.read(4)
+                elevation = float((elevation_bytes[0] - 48) * 100.0) + \
+                            float((elevation_bytes[1] - 48) * 10.0) + \
+                            float((elevation_bytes[2] - 48)) + \
+                            float((elevation_bytes[3] - 48) / 10.0)
+                return elevation
+            else:
+                print(&#34;Something went wrong, code:&#34;, return_code)
+                return False</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.Treadmill.get_fw_rev"><code class="name flex">
+<span>def <span class="ident">get_fw_rev</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_fw_rev(self):
+    if self.comport is not None:
+        if self.comport.isOpen():
+            command = bytearray()
+            command.append(TreadmillCommands.GET_FW_REV)
+            self.comport.write(command)
+            return_code = self.comport.read(1)
+            if return_code == TreadmillReturns.GET_FW_REV:
+                fw_bytes = self.comport.read(4)
+                fw_rev = (fw_bytes[0] &lt;&lt; 24) | (fw_bytes[1] &lt;&lt; 16) | (fw_bytes[2] &lt;&lt; 8) | fw_bytes[3]
+                return fw_rev
+            else:
+                print(&#34;Something went wrong, code:&#34;, return_code)
+                return False</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.Treadmill.get_speed"><code class="name flex">
+<span>def <span class="ident">get_speed</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_speed(self):
+    if self.comport is not None:
+        if self.comport.isOpen():
+            command = bytearray()
+            command.append(TreadmillCommands.GET_SPEED)
+            self.comport.write(command)
+            return_code = self.comport.read(1)
+            if return_code == TreadmillReturns.GET_SPEED:
+                speed_bytes = self.comport.read(4)
+                speed = float((speed_bytes[1] - 48) * 10.0) + \
+                        float((speed_bytes[2] - 48)) + \
+                        float((speed_bytes[3] - 48) / 10.0)
+                if speed_bytes[0] == 51:
+                    speed = -speed
+                return speed
+            else:
+                print(&#34;Something went wrong, code:&#34;, return_code)
+                return False</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.Treadmill.set_elevation"><code class="name flex">
+<span>def <span class="ident">set_elevation</span></span>(<span>self, elevation)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_elevation(self, elevation):
+    if self.comport is not None:
+        if self.comport.isOpen():
+            if isinstance(elevation, float):
+                command = bytearray()
+                command.append(TreadmillCommands.SET_ELEVATION)
+                if elevation &lt; 100.0:
+                    command.append(ord(&#39;0&#39;))
+                if elevation &lt; 10.0:
+                    command.append(ord(&#39;0&#39;))
+                elevation_digits = [ord(i) for i in str(elevation)]
+                for digit in elevation_digits:
+                    if digit != 46:
+                        command.append(digit)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.SET_ELEVATION:
+                    return True
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.Treadmill.set_speed"><code class="name flex">
+<span>def <span class="ident">set_speed</span></span>(<span>self, mph)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_speed(self, mph):
+    if self.comport is not None:
+        if self.comport.isOpen():
+            if isinstance(mph, float):
+                command = bytearray()
+                command.append(TreadmillCommands.SET_SPEED)
+                if mph &gt; 0.0:
+                    self.forward = True
+                    self.reverse = False
+                    command.append(ord(&#39;0&#39;))
+                else:
+                    self.forward = False
+                    self.reverse = True
+                    command.append(ord(&#39;3&#39;))
+                if mph &lt; 10.0:
+                    command.append(ord(&#39;0&#39;))
+                mph_digits = [ord(i) for i in str(mph)]
+                for digit in mph_digits:
+                    if digit != 46:
+                        command.append(digit)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.SET_SPEED:
+                    return True
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+            else:
+                raise ValueError(&#34;Parameter invalid - mph must be a float!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.Treadmill.start_belt"><code class="name flex">
+<span>def <span class="ident">start_belt</span></span>(<span>self, timer)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start_belt(self, timer):
+    if self.comport is not None:
+        if self.comport.isOpen():
+            if timer:
+                command = bytearray()
+                command.append(TreadmillCommands.START_BELT_TIMER)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.START_BELT_TIMER:
+                    self.running = True
+                    return True
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False
+            else:
+                command = bytearray()
+                command.append(TreadmillCommands.START_BELT)
+                self.comport.write(command)
+                return_code = self.comport.read(1)
+                if return_code == TreadmillReturns.START_BELT:
+                    self.running = True
+                    return True
+                else:
+                    print(&#34;Something went wrong, code:&#34;, return_code)
+                    return False</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.Treadmill.stop_belt"><code class="name flex">
+<span>def <span class="ident">stop_belt</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def stop_belt(self):
+    if self.comport is not None:
+        if self.comport.isOpen():
+            command = bytearray()
+            command.append(TreadmillCommands.AUTO_STOP)
+            self.comport.write(command)
+            return_code = self.comport.read(1)
+            if return_code == TreadmillReturns.AUTO_STOP:
+                self.running = False
+                return True
+            else:
+                print(&#34;Something went wrong, code:&#34;, return_code)
+                return False</code></pre>
+</details>
+</dd>
+<dt id="pywoodway.treadmill.Treadmill.test_treadmill"><code class="name flex">
+<span>def <span class="ident">test_treadmill</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def test_treadmill(self):
+    if self.comport is not None:
+        if self.comport.isOpen():
+            command = bytearray()
+            command.append(TreadmillCommands.TEST_COMMS)
+            print(command)
+            self.comport.write(command)
+            return_code = self.comport.read(1)
+            if return_code == TreadmillReturns.TEST_COMMS:
+                print(&#34;State:&#34;, self.comport.read(1))
+                return True
+            else:
+                print(&#34;Something went wrong, code:&#34;, return_code)
+                return False</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillCommands"><code class="flex name class">
+<span>class <span class="ident">TreadmillCommands</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TreadmillCommands:
+    START_BELT_TIMER = 160
+    DISENGAGE_BELT = 162
+    SET_SPEED = 163
+    SET_ELEVATION = 164
+    START_BELT = 169
+    AUTO_STOP = 170
+    TEST_COMMS = 192
+    GET_SPEED = 193
+    GET_ELEVATION = 194
+    GET_FW_REV = 195</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="pywoodway.treadmill.TreadmillCommands.AUTO_STOP"><code class="name">var <span class="ident">AUTO_STOP</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillCommands.DISENGAGE_BELT"><code class="name">var <span class="ident">DISENGAGE_BELT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillCommands.GET_ELEVATION"><code class="name">var <span class="ident">GET_ELEVATION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillCommands.GET_FW_REV"><code class="name">var <span class="ident">GET_FW_REV</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillCommands.GET_SPEED"><code class="name">var <span class="ident">GET_SPEED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillCommands.SET_ELEVATION"><code class="name">var <span class="ident">SET_ELEVATION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillCommands.SET_SPEED"><code class="name">var <span class="ident">SET_SPEED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillCommands.START_BELT"><code class="name">var <span class="ident">START_BELT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillCommands.START_BELT_TIMER"><code class="name">var <span class="ident">START_BELT_TIMER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillCommands.TEST_COMMS"><code class="name">var <span class="ident">TEST_COMMS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns"><code class="flex name class">
+<span>class <span class="ident">TreadmillReturns</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TreadmillReturns:
+    START_BELT_TIMER = b&#39;\xb0&#39;
+    DISENGAGE_BELT = b&#39;\xb2&#39;
+    SET_SPEED = b&#39;\xb3&#39;
+    SET_ELEVATION = b&#39;\xb4&#39;
+    START_BELT = b&#39;\xb9&#39;
+    AUTO_STOP = b&#39;\xba&#39;
+    MASTER_TIMEOUT = b&#39;\xbd&#39;
+    INVALID_DATA = b&#39;\xbe&#39;
+    INVALID_COMMAND = b&#39;\xbf&#39;
+    TEST_COMMS = b&#39;\xd0&#39;
+    GET_SPEED = b&#39;\xd1&#39;
+    GET_ELEVATION = b&#39;\xd2&#39;
+    GET_FW_REV = b&#39;\xd3&#39;</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="pywoodway.treadmill.TreadmillReturns.AUTO_STOP"><code class="name">var <span class="ident">AUTO_STOP</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns.DISENGAGE_BELT"><code class="name">var <span class="ident">DISENGAGE_BELT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns.GET_ELEVATION"><code class="name">var <span class="ident">GET_ELEVATION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns.GET_FW_REV"><code class="name">var <span class="ident">GET_FW_REV</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns.GET_SPEED"><code class="name">var <span class="ident">GET_SPEED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns.INVALID_COMMAND"><code class="name">var <span class="ident">INVALID_COMMAND</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns.INVALID_DATA"><code class="name">var <span class="ident">INVALID_DATA</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns.MASTER_TIMEOUT"><code class="name">var <span class="ident">MASTER_TIMEOUT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns.SET_ELEVATION"><code class="name">var <span class="ident">SET_ELEVATION</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns.SET_SPEED"><code class="name">var <span class="ident">SET_SPEED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns.START_BELT"><code class="name">var <span class="ident">START_BELT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns.START_BELT_TIMER"><code class="name">var <span class="ident">START_BELT_TIMER</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="pywoodway.treadmill.TreadmillReturns.TEST_COMMS"><code class="name">var <span class="ident">TEST_COMMS</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="pywoodway" href="index.html">pywoodway</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="pywoodway.treadmill.find_treadmills" href="#pywoodway.treadmill.find_treadmills">find_treadmills</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="pywoodway.treadmill.SplitBelt" href="#pywoodway.treadmill.SplitBelt">SplitBelt</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pywoodway.treadmill.SplitBelt.close" href="#pywoodway.treadmill.SplitBelt.close">close</a></code></li>
+<li><code><a title="pywoodway.treadmill.SplitBelt.get_elevations" href="#pywoodway.treadmill.SplitBelt.get_elevations">get_elevations</a></code></li>
+<li><code><a title="pywoodway.treadmill.SplitBelt.get_fw_revs" href="#pywoodway.treadmill.SplitBelt.get_fw_revs">get_fw_revs</a></code></li>
+<li><code><a title="pywoodway.treadmill.SplitBelt.get_speeds" href="#pywoodway.treadmill.SplitBelt.get_speeds">get_speeds</a></code></li>
+<li><code><a title="pywoodway.treadmill.SplitBelt.set_speed" href="#pywoodway.treadmill.SplitBelt.set_speed">set_speed</a></code></li>
+<li><code><a title="pywoodway.treadmill.SplitBelt.start_belts" href="#pywoodway.treadmill.SplitBelt.start_belts">start_belts</a></code></li>
+<li><code><a title="pywoodway.treadmill.SplitBelt.stop_belts" href="#pywoodway.treadmill.SplitBelt.stop_belts">stop_belts</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pywoodway.treadmill.Treadmill" href="#pywoodway.treadmill.Treadmill">Treadmill</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pywoodway.treadmill.Treadmill.close" href="#pywoodway.treadmill.Treadmill.close">close</a></code></li>
+<li><code><a title="pywoodway.treadmill.Treadmill.disengage_belt" href="#pywoodway.treadmill.Treadmill.disengage_belt">disengage_belt</a></code></li>
+<li><code><a title="pywoodway.treadmill.Treadmill.get_elevation" href="#pywoodway.treadmill.Treadmill.get_elevation">get_elevation</a></code></li>
+<li><code><a title="pywoodway.treadmill.Treadmill.get_fw_rev" href="#pywoodway.treadmill.Treadmill.get_fw_rev">get_fw_rev</a></code></li>
+<li><code><a title="pywoodway.treadmill.Treadmill.get_speed" href="#pywoodway.treadmill.Treadmill.get_speed">get_speed</a></code></li>
+<li><code><a title="pywoodway.treadmill.Treadmill.set_elevation" href="#pywoodway.treadmill.Treadmill.set_elevation">set_elevation</a></code></li>
+<li><code><a title="pywoodway.treadmill.Treadmill.set_speed" href="#pywoodway.treadmill.Treadmill.set_speed">set_speed</a></code></li>
+<li><code><a title="pywoodway.treadmill.Treadmill.start_belt" href="#pywoodway.treadmill.Treadmill.start_belt">start_belt</a></code></li>
+<li><code><a title="pywoodway.treadmill.Treadmill.stop_belt" href="#pywoodway.treadmill.Treadmill.stop_belt">stop_belt</a></code></li>
+<li><code><a title="pywoodway.treadmill.Treadmill.test_treadmill" href="#pywoodway.treadmill.Treadmill.test_treadmill">test_treadmill</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pywoodway.treadmill.TreadmillCommands" href="#pywoodway.treadmill.TreadmillCommands">TreadmillCommands</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pywoodway.treadmill.TreadmillCommands.AUTO_STOP" href="#pywoodway.treadmill.TreadmillCommands.AUTO_STOP">AUTO_STOP</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillCommands.DISENGAGE_BELT" href="#pywoodway.treadmill.TreadmillCommands.DISENGAGE_BELT">DISENGAGE_BELT</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillCommands.GET_ELEVATION" href="#pywoodway.treadmill.TreadmillCommands.GET_ELEVATION">GET_ELEVATION</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillCommands.GET_FW_REV" href="#pywoodway.treadmill.TreadmillCommands.GET_FW_REV">GET_FW_REV</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillCommands.GET_SPEED" href="#pywoodway.treadmill.TreadmillCommands.GET_SPEED">GET_SPEED</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillCommands.SET_ELEVATION" href="#pywoodway.treadmill.TreadmillCommands.SET_ELEVATION">SET_ELEVATION</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillCommands.SET_SPEED" href="#pywoodway.treadmill.TreadmillCommands.SET_SPEED">SET_SPEED</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillCommands.START_BELT" href="#pywoodway.treadmill.TreadmillCommands.START_BELT">START_BELT</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillCommands.START_BELT_TIMER" href="#pywoodway.treadmill.TreadmillCommands.START_BELT_TIMER">START_BELT_TIMER</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillCommands.TEST_COMMS" href="#pywoodway.treadmill.TreadmillCommands.TEST_COMMS">TEST_COMMS</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="pywoodway.treadmill.TreadmillReturns" href="#pywoodway.treadmill.TreadmillReturns">TreadmillReturns</a></code></h4>
+<ul class="two-column">
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.AUTO_STOP" href="#pywoodway.treadmill.TreadmillReturns.AUTO_STOP">AUTO_STOP</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.DISENGAGE_BELT" href="#pywoodway.treadmill.TreadmillReturns.DISENGAGE_BELT">DISENGAGE_BELT</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.GET_ELEVATION" href="#pywoodway.treadmill.TreadmillReturns.GET_ELEVATION">GET_ELEVATION</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.GET_FW_REV" href="#pywoodway.treadmill.TreadmillReturns.GET_FW_REV">GET_FW_REV</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.GET_SPEED" href="#pywoodway.treadmill.TreadmillReturns.GET_SPEED">GET_SPEED</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.INVALID_COMMAND" href="#pywoodway.treadmill.TreadmillReturns.INVALID_COMMAND">INVALID_COMMAND</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.INVALID_DATA" href="#pywoodway.treadmill.TreadmillReturns.INVALID_DATA">INVALID_DATA</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.MASTER_TIMEOUT" href="#pywoodway.treadmill.TreadmillReturns.MASTER_TIMEOUT">MASTER_TIMEOUT</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.SET_ELEVATION" href="#pywoodway.treadmill.TreadmillReturns.SET_ELEVATION">SET_ELEVATION</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.SET_SPEED" href="#pywoodway.treadmill.TreadmillReturns.SET_SPEED">SET_SPEED</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.START_BELT" href="#pywoodway.treadmill.TreadmillReturns.START_BELT">START_BELT</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.START_BELT_TIMER" href="#pywoodway.treadmill.TreadmillReturns.START_BELT_TIMER">START_BELT_TIMER</a></code></li>
+<li><code><a title="pywoodway.treadmill.TreadmillReturns.TEST_COMMS" href="#pywoodway.treadmill.TreadmillReturns.TEST_COMMS">TEST_COMMS</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -9,6 +9,10 @@ Developer: Walker Arce<br>
 ### Motivation
 This Python library was written to facilitate closed-loop experimental protocol for motor related research.
 
+### Installation
+Clone this repository, cd into the directory using either your virtual environment or your local environment, and run:
+`python setup.py install`
+
 ### Usage
 ```
 from pywoodway.treadmill import SplitBelt, find_treadmills
@@ -48,3 +52,14 @@ for port in ports:
 ```
 
 Write down the serial number for each treadmill (if using a split belt these are marked A and B) and pass those as arguments to the `find_treadmills()` function.
+
+### Citation
+```
+@misc{Arce_pyWoodway_2021,
+      author = {Arce, Walker and Gehringer, James},
+      month = {8},
+      title = {{pyWoodway}},
+      url = {https://github.com/Munroe-Meyer-Institute-VR-Laboratory/pyWoodway},
+      year = {2021}
+}
+```

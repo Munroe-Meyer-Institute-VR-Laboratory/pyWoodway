@@ -3,6 +3,9 @@ from serial.tools import list_ports
 
 
 class TreadmillCommands:
+    """
+    The command set for a Woodway treadmill.
+    """
     START_BELT_TIMER = 160
     DISENGAGE_BELT = 162
     SET_SPEED = 163
@@ -16,6 +19,9 @@ class TreadmillCommands:
 
 
 class TreadmillReturns:
+    """
+    The return commands from a Woodway treadmill.
+    """
     START_BELT_TIMER = b'\xb0'
     DISENGAGE_BELT = b'\xb2'
     SET_SPEED = b'\xb3'
@@ -34,6 +40,14 @@ class TreadmillReturns:
 # 'FTHCUWVAA' - comport A
 # 'FTHCUQ9IA' - comport B
 def find_treadmills(a_sn=None, b_sn=None):
+    """
+    Searches available COM ports for the corresponding serial numbers for the A and B treadmill.
+    Plug in your treadmill belts, navigate to the 'Device Manager', and look in the properties of the treadmill
+    COM port for the serial number of the FTDI chip of your treadmill.
+    :param a_sn: str: serial number for the A treadmill
+    :param b_sn: str: serial number for the B treadmill
+    :return: np-list: contains the COM ports, first is A, second is B.
+    """
     ports = list_ports.comports()
     a_port, b_port = None, None
     found_ports = []
@@ -54,7 +68,14 @@ def find_treadmills(a_sn=None, b_sn=None):
 
 
 class Treadmill:
+    """
+    Class object to control a single treadmill belt. Should be compatible with all Woodway treadmills.
+    """
     def __init__(self, comport):
+        """
+        Connects to the comport specified, stops the treadmill, and sets the control variables.
+        :param comport: str: name of comport to connect to.
+        """
         self.comport = serial.Serial(comport, baudrate=4800, stopbits=1)
         if self.test_treadmill():
             self.stop_belt()
@@ -64,11 +85,19 @@ class Treadmill:
         self.sending = False
 
     def close(self):
+        """
+        Closes the comport, if it's open.
+        :return: None.
+        """
         if self.comport is not None:
             if self.comport.isOpen():
                 self.comport.close()
 
     def test_treadmill(self):
+        """
+        Sends the test comms command and prints the returned value.
+        :return: bool: True if comms are good, False if not.
+        """
         if self.comport is not None:
             if self.comport.isOpen():
                 command = bytearray()
@@ -84,6 +113,10 @@ class Treadmill:
                     return False
 
     def get_fw_rev(self):
+        """
+        Gets the firmware revision of the treadmill.
+        :return: int: firmware revision, False if command fails.
+        """
         if self.comport is not None:
             if self.comport.isOpen():
                 command = bytearray()
@@ -99,6 +132,11 @@ class Treadmill:
                     return False
 
     def start_belt(self, timer):
+        """
+        Engages power to the belt, starts communication timer if timer is True.
+        :param timer: bool: Sends the start belt command with timeout if True/
+        :return: bool: True if belt starts, False if it fails.
+        """
         if self.comport is not None:
             if self.comport.isOpen():
                 if timer:
@@ -125,36 +163,49 @@ class Treadmill:
                         return False
 
     def set_speed(self, mph):
+        """
+        Sets the speed of the treadmill.  If treadmill is engaged, the belt will start moving.
+        :param mph: float: speed of the belt in MPH, max speed is 29.9.
+        :return: True if successful, False if failed, raises ValueError if parameter is not valid.
+        """
         if self.comport is not None:
             if self.comport.isOpen():
                 if isinstance(mph, float):
-                    command = bytearray()
-                    command.append(TreadmillCommands.SET_SPEED)
-                    if mph > 0.0:
-                        self.forward = True
-                        self.reverse = False
-                        command.append(ord('0'))
+                    if mph > 29.9:
+                        raise ValueError("Set speed is too high, speed must be below 29.9 MPH.")
                     else:
-                        self.forward = False
-                        self.reverse = True
-                        command.append(ord('3'))
-                    if mph < 10.0:
-                        command.append(ord('0'))
-                    mph_digits = [ord(i) for i in str(mph)]
-                    for digit in mph_digits:
-                        if digit != 46:
-                            command.append(digit)
-                    self.comport.write(command)
-                    return_code = self.comport.read(1)
-                    if return_code == TreadmillReturns.SET_SPEED:
-                        return True
-                    else:
-                        print("Something went wrong, code:", return_code)
-                        return False
+                        command = bytearray()
+                        command.append(TreadmillCommands.SET_SPEED)
+                        if mph > 0.0:
+                            self.forward = True
+                            self.reverse = False
+                            command.append(ord('0'))
+                        else:
+                            self.forward = False
+                            self.reverse = True
+                            command.append(ord('3'))
+                        if mph < 10.0:
+                            command.append(ord('0'))
+                        mph_digits = [ord(i) for i in str(mph)]
+                        for digit in mph_digits:
+                            if digit != 46:
+                                command.append(digit)
+                        self.comport.write(command)
+                        return_code = self.comport.read(1)
+                        if return_code == TreadmillReturns.SET_SPEED:
+                            return True
+                        else:
+                            print("Something went wrong, code:", return_code)
+                            return False
                 else:
                     raise ValueError("Parameter invalid - mph must be a float!")
 
     def get_speed(self):
+        """
+        Gets the current speed of the treadmill.  The treadmill has a ramp up, so it may take a few seconds, to reach
+        the set speed.
+        :return: True if successful, False if failed.
+        """
         if self.comport is not None:
             if self.comport.isOpen():
                 command = bytearray()
@@ -174,28 +225,43 @@ class Treadmill:
                     return False
 
     def set_elevation(self, elevation):
+        """
+        Sets the inclination of the treadmill in units of percentage.  Max value is 29.9%.
+        :param elevation: float: Elevation in percentage, must be below 29.9%
+        :return: bool: True if successful, False if failed, raises ValueError if elevation is invalid.
+        """
         if self.comport is not None:
             if self.comport.isOpen():
                 if isinstance(elevation, float):
-                    command = bytearray()
-                    command.append(TreadmillCommands.SET_ELEVATION)
-                    if elevation < 100.0:
-                        command.append(ord('0'))
-                    if elevation < 10.0:
-                        command.append(ord('0'))
-                    elevation_digits = [ord(i) for i in str(elevation)]
-                    for digit in elevation_digits:
-                        if digit != 46:
-                            command.append(digit)
-                    self.comport.write(command)
-                    return_code = self.comport.read(1)
-                    if return_code == TreadmillReturns.SET_ELEVATION:
-                        return True
+                    if elevation > 29.9:
+                        raise ValueError("Over elevation, max inclination is 29.9%.")
                     else:
-                        print("Something went wrong, code:", return_code)
-                        return False
+                        command = bytearray()
+                        command.append(TreadmillCommands.SET_ELEVATION)
+                        if elevation < 100.0:
+                            command.append(ord('0'))
+                        if elevation < 10.0:
+                            command.append(ord('0'))
+                        elevation_digits = [ord(i) for i in str(elevation)]
+                        for digit in elevation_digits:
+                            if digit != 46:
+                                command.append(digit)
+                        self.comport.write(command)
+                        return_code = self.comport.read(1)
+                        if return_code == TreadmillReturns.SET_ELEVATION:
+                            return True
+                        else:
+                            print("Something went wrong, code:", return_code)
+                            return False
+                else:
+                    raise ValueError("Elevation must be a float.")
 
     def get_elevation(self):
+        """
+        Gets the current elevation of the treadmill, the elevation has a ramp up time, so it may take a short period
+        to get to set elevation.
+        :return: float: current elevation of treadmill belt.
+        """
         if self.comport is not None:
             if self.comport.isOpen():
                 command = bytearray()
@@ -214,6 +280,10 @@ class Treadmill:
                     return False
 
     def stop_belt(self):
+        """
+        Stops the motion of the belt, sets the current inclination and speed to zero.
+        :return: bool: True if successful, False if failed.
+        """
         if self.comport is not None:
             if self.comport.isOpen():
                 command = bytearray()
@@ -228,6 +298,10 @@ class Treadmill:
                     return False
 
     def disengage_belt(self):
+        """
+        Disengages power to the belt.
+        :return: bool: True if successful, False if failed.
+        """
         if self.comport is not None:
             if self.comport.isOpen():
                 command = bytearray()
@@ -243,11 +317,27 @@ class Treadmill:
 
 
 class SplitBelt:
+    """
+    Class to control the Woodway split belt treadmill.  Wraps two instances of the Treadmill class.
+    """
     def __init__(self, comport_a, comport_b):
+        """
+        Initializes the A and B belt comports.
+        :param comport_a: str: comport connected to A belt.
+        :param comport_b: str: comport connected to B belt.
+        """
         self.belt_a = Treadmill(comport_a)
         self.belt_b = Treadmill(comport_b)
 
     def start_belts(self, start_a, a_timer, start_b, b_timer):
+        """
+        Start individual belts and with timers.
+        :param start_a: bool: start belt A
+        :param a_timer: bool: start belt A timer
+        :param start_b: bool: start belt B
+        :param b_timer: bool: start belt B timer
+        :return: bool: True if successful, False if failed.
+        """
         success = False
         if start_a:
             if self.belt_a.start_belt(a_timer):
@@ -262,24 +352,50 @@ class SplitBelt:
         return success
 
     def set_speed(self, a_mph, b_mph):
+        """
+        Sets the speed of the belts.
+        :param a_mph: float: speed of belt A in MPH, max is 29.9 MPH.
+        :param b_mph: float: speed of belt B in MPH, max is 29.9 MPH.
+        :return: bool: True if successful, False if failed.
+        """
         if self.belt_a.set_speed(a_mph):
             if self.belt_b.set_speed(b_mph):
                 return True
         return False
 
     def stop_belts(self):
+        """
+        Stops the belts.
+        :return: None.
+        """
         self.belt_a.stop_belt()
         self.belt_b.stop_belt()
 
     def get_speeds(self):
+        """
+        Gets the speed of the belts.
+        :return: np-list: First element is belt A speed, second element is belt B speed
+        """
         return [self.belt_a.get_speed(), self.belt_b.get_speed()]
 
     def get_elevations(self):
+        """
+        Gets the elevation of the belts.
+        :return: np-list: First element is belt A elevation, second element is belt B elevation
+        """
         return [self.belt_a.get_elevation(), self.belt_b.get_elevation()]
 
     def get_fw_revs(self):
+        """
+        Gets the firmware revision of the belts.
+        :return: np-list: First element is belt A revision, second element is belt B revision
+        """
         return [self.belt_a.get_fw_rev(), self.belt_b.get_fw_rev()]
 
     def close(self):
+        """
+        Closes the comports of the two belts
+        :return: None.
+        """
         self.belt_a.close()
         self.belt_b.close()

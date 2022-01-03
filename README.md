@@ -7,7 +7,7 @@ Advisor: Dr. James Gehringer<br>
 Developer: Walker Arce<br>
 
 ### Motivation
-This Python library was written to facilitate closed-loop experimental protocol for motor related research.
+This Python library was written to facilitate closed-loop experimental protocol for biomechanics and motor-control related research.
 
 ### Installation
 Clone this repository, cd into the directory using either your virtual environment or your local environment, and run:

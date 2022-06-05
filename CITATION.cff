@@ -8,6 +8,6 @@ authors:
   given-names: "James"
   orcid: "https://orcid.org/0000-0003-3457-2288"
 title: "pyWoodway"
-version: v0.1.0
+version: v0.2.1
 date-released: 2021-08-22
 url: "https://github.com/Munroe-Meyer-Institute-VR-Laboratory/pyWoodway"

@@ -1,4 +1,4 @@
-from pywoodway.treadmill import SplitBelt, find_treadmills
+from pywoodway import SplitBelt, find_treadmills
 import time
 
 

@@ -4,7 +4,7 @@ with open('README.md') as f:
     readme = f.read()
 
 setup(name='pyWoodway',
-      version='0.2.2',
+      version='0.2.3',
       url='https://github.com/Munroe-Meyer-Institute-VR-Laboratory/pyWoodway',
       author='Walker Arce',
       author_email='walker.arce@unmc.edu',

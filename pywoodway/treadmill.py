@@ -296,6 +296,16 @@ class Treadmill:
                     print(self.last_error)
                     return False
 
+    def is_connected(self):
+        """
+        Check if treadmill is connected
+        :return: True if connected, False if disconnected
+        """
+        if self.comport is not None:
+            if self.comport.isOpen():
+                return True
+        return False
+
     def stop_belt(self):
         """
         Stops the motion of the belt, sets the current inclination and speed to zero.
@@ -421,6 +431,22 @@ class SplitBelt:
         :return: np-list: First element is belt A revision, second element is belt B revision
         """
         return [self.belt_a.get_fw_rev(), self.belt_b.get_fw_rev()]
+
+    def is_connected(self):
+        """
+        Check if split belt is connected
+        :return: tuple: First element is belt a status, second element is belt b status
+        """
+        connections = []
+        if self.belt_a.is_connected():
+            connections.append(True)
+        else:
+            connections.append(False)
+        if self.belt_b.is_connected():
+            connections.append(True)
+        else:
+            connections.append(False)
+        return connections[0], connections[1]
 
     def close(self):
         """

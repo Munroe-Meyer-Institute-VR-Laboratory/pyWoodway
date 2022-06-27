@@ -416,7 +416,7 @@ class SplitBelt:
         :return:
         """
         self.belt_a.set_elevation(elevation)
-        # self.belt_b.set_elevation(b_elevation)
+        self.belt_b.set_elevation(elevation)
 
     def get_elevations(self):
         """
